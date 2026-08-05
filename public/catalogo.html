@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo | Vehicmaq SPA</title>
+<link rel="icon" type="image/png" href="logo-transparent.png">
+<meta name="description" content="Catálogo completo de vehículos Vehicmaq SPA. Filtra por tipo, marca, año y más.">
+<style>
+:root{--azul:#0d3b5c;--azul-osc:#08223a;--beige:#e8dcc0;--beige-claro:#f5f0e6;--negro:#1a1a1a;--gris:#6b7280;--gris-claro:#f4f4f5;--blanco:#fff;--sombra:0 4px 20px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--gris-claro);color:var(--negro);line-height:1.6}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+.container{max-width:1300px;margin:0 auto;padding:0 20px}
+/* HEADER */
+header{background:var(--azul);position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+header .container{display:flex;align-items:center;justify-content:space-between;padding:12px 20px}
+.logo-wrap{display:flex;align-items:center;gap:10px}
+.logo-wrap img{height:45px}
+.logo-text{color:#fff;font-size:1.3rem;font-weight:800}
+.back-link{color:#fff;font-size:.9rem;font-weight:600;opacity:.9}
+.back-link:hover{opacity:1}
+/* TITLE */
+.page-title{background:linear-gradient(135deg,var(--azul-osc),var(--azul));color:#fff;text-align:center;padding:50px 0}
+.page-title h1{font-size:2rem;font-weight:800}
+.page-title p{opacity:.85;margin-top:5px}
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:260px 1fr;gap:25px;padding:30px 0}
+/* FILTERS */
+.filters{background:#fff;border-radius:12px;padding:20px;box-shadow:var(--sombra);height:fit-content;position:sticky;top:80px}
+.filters h2{font-size:1.1rem;color:var(--azul);margin-bottom:15px;padding-bottom:10px;border-bottom:2px solid var(--beige-claro)}
+.filter-group{margin-bottom:18px}
+.filter-group label{display:block;font-size:.85rem;font-weight:600;color:var(--negro);margin-bottom:5px}
+.filter-group select,.filter-group input{width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:.85rem;outline:none;transition:border-color .2s}
+.filter-group select:focus,.filter-group input:focus{border-color:var(--azul)}
+.filter-range{display:flex;gap:8px;align-items:center}
+.filter-range input{width:50%}
+.btn-clear{width:100%;padding:10px;border:2px solid var(--azul);background:transparent;color:var(--azul);border-radius:8px;font-weight:700;cursor:pointer;transition:background .2s}
+.btn-clear:hover{background:var(--azul);color:#fff}
+.results-count{font-size:.85rem;color:var(--gris);margin-bottom:15px}
+/* GRID */
+.catalogo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.vehicle-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--sombra);transition:transform .2s}
+.vehicle-card:hover{transform:translateY(-5px)}
+.vehicle-card img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.vehicle-card .info{padding:16px}
+.vehicle-card h3{font-size:1rem;margin-bottom:6px}
+.vehicle-card .spec{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.vehicle-card .spec span{background:var(--beige-claro);color:var(--azul);font-size:.75rem;font-weight:600;padding:3px 8px;border-radius:20px}
+.vehicle-card .extra{font-size:.8rem;color:var(--gris)}
+.no-results{text-align:center;padding:40px;color:var(--gris)}
+/* WHATSAPP FLOAT */
+.wa-float{position:fixed;bottom:20px;right:20px;width:60px;height:60px;z-index:999;transition:transform .2s}
+.wa-float:hover{transform:scale(1.1)}
+/* FOOTER */
+footer{background:var(--azul-osc);color:#fff;padding:20px 0;text-align:center}
+footer p{opacity:.7;font-size:.85rem}
+/* SORT */
+.sort-bar{display:flex;align-items:center;gap:10px;margin-bottom:15px}
+.sort-bar label{font-size:.85rem;font-weight:600;color:var(--negro)}
+.sort-bar select{padding:6px 10px;border:1px solid #ddd;border-radius:8px;font-size:.85rem}
+/* MOBILE */
+@media(max-width:900px){
+.layout{grid-template-columns:1fr}
+.filters{position:static}
+}
+</style>
+</head>
+<body>
+<!-- HEADER -->
+<header>
+<div class="container">
+<div class="logo-wrap">
+<a href="index.html"><img src="logo-transparent.png" alt="Vehicmaq SPA"></a>
+<span class="logo-text">Vehicmaq SPA</span>
+</div>
+<a href="index.html" class="back-link">← Volver al Inicio</a>
+</div>
+</header>
+<!-- TITLE -->
+<div class="page-title">
+<h1>Catálogo de Vehículos</h1>
+<p>Filtra para encontrar el vehículo ideal</p>
+</div>
+<!-- LAYOUT -->
+<div class="container">
+<div class="layout">
+<!-- FILTERS -->
+<aside class="filters">
+<h2>Filtros</h2>
+<div class="filter-group">
+<label for="f-tipo">Tipo de Vehículo</label>
+<select id="f-tipo"><option value="">Todos</option></select>
+</div>
+<div class="filter-group">
+<label for="f-marca">Marca</label>
+<select id="f-marca"><option value="">Todas</option></select>
+</div>
+<div class="filter-group">
+<label for="f-traccion">Tracción</label>
+<select id="f-traccion"><option value="">Todas</option></select>
+</div>
+<div class="filter-group">
+<label for="f-year-min">Año</label>
+<div class="filter-range">
+<input type="number" id="f-year-min" placeholder="Desde" min="2010" max="2025">
+<input type="number" id="f-year-max" placeholder="Hasta" min="2010" max="2025">
+</div>
+</div>
+<div class="filter-group">
+<label for="f-km-max">Km Máximo</label>
+<input type="number" id="f-km-max" placeholder="Ej: 150000 (∟)">
+</div>
+<button class="btn-clear" onclick="clearFilters()">Limpiar Filtros</button>
+</aside>
+<!-- RESULTS -->
+<main>
+<div class="sort-bar">
+<label for="sort">Ordenar:</label>
+<select id="sort" onchange="renderGrid()">
+<option value="recent">Más recientes</option>
+<option value="year-desc">Año (mayor→menor)</option>
+<option value="year-asc">Año (menor→mayor)</option>
+<option value="km-asc">Km (menor→mayor)</option>
+<option value="km-desc">Km (mayor→menor)</option>
+<option value="brand">Marca (A-Z)</option>
+</select>
+</div>
+<div class="results-count" id="results-count"></div>
+<div class="catalogo-grid" id="grid"></div>
+</main>
+</div>
+</div>
+<!-- FOOTER -->
+<footer><p>&copy; 2025 Vehicmaq SPA. Todos los derechos reservados.</p></footer>
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/56912345678" class="wa-float" target="_blank" aria-label="WhatsApp">
+<svg viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.82 11.82 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 00-3.48-8.413z"/></svg>
+</a>
+<script>
+const VEHICLES=[{"name": "TOYOTA HILUX SRV 2.8 AT 4X4 - BURDEO", "brand": "Toyota", "model": "HILUX SRV 2.8 AT 4X4 - BURDEO", "type": "Camioneta", "type_en": "pickup", "year": "2023", "km": "117.000 km", "trans": "Automático", "fuel": "Diesel", "traccion": "4x4", "unico_dueno": true, "image": "img/ig_3943432936649682611.jpg", "caption": "TOYOTA HILUX SRV 2.8 AT 4X4 - BURDEO 🚜\n• Año: 2023\n• Kilometraje: 117.000\n• Único dueño\nDocumentación al día\n💳 Aceptamos tarjetas de crédito\nPara más información comunícate con nosotros ⬇️\n📍 Capitan Godoy 365, San Bernardo, Santiago", "price": ""}, {"name": "FORD F150 RAPTOR - BLANCO", "brand": "Ford", "model": "F150 RAPTOR - BLANCO", "type": "Camioneta", "type_en": "pickup", "year": "2018", "km": "216.000 km", "trans": "", "fuel": "", "traccion": "", "unico_dueno": false, "image": "img/ig_3917592262876149469.jpg", "caption": "FORD F150 RAPTOR - BLANCO 🚜\n• Año: 2018\n• Kilometraje: 216.000\nDocumentación al día\n💳 Aceptamos tarjetas de crédito\nPara más información comunícate con nosotros ⬇️\n📍 Capitan Godoy 365, San Bernardo, Santiago", "price": ""}, {"name": "NISSAN NAVARA SE 4X4", "brand": "Nissan", "model": "NAVARA SE 4X4", "type": "Camioneta", "type_en": "pickup", "year": "2023", "km": "100.000 km", "trans": "", "fuel": "Diesel", "traccion": "4x4", "unico_dueno": true, "image": "img/ig_3929201975929724323.jpg", "caption": "NISSAN NAVARA SE 4X4 🚜\n• Año: 2023\n• Kilometraje: 100.000\n• Único dueño\nDocumentación al día\n💳 Aceptamos tarjetas de crédito\nPara más información comunícate con nosotros ⬇️\n📍 Capitan Godoy 365, San Bernardo, Santiago", "price": ""}, {"name": "FORD RANGER XLT 3.2 AUT 4X4", "brand": "Ford", "model": "RANGER XLT 3.2 AUT 4X4", "type": "Camioneta", "type_en": "pickup", "year": "2023", "km": "173.000 km", "trans": "Automático", "fuel": "", "traccion": "4x4", "unico_dueno": true, "image": "img/ig_3923999778824591227.jpg", "caption": "FORD RANGER XLT 3.2 AUT 4X4 🚜\n• Año: 2023\n• Kilometraje: 173.000\n• Único dueño\nDocumentación al día\n💳 Aceptamos tarjetas de crédito\nPara más información comunícate con nosotros ⬇️\n📍 Capitan Godoy 365, San Bernardo, Santiago", "price": ""}, {"name": "FORD TRANSIT CUSTOM", "brand": "Ford", "model": "TRANSIT CUSTOM", "type": "Furgón", "type_en": "van", "year": "2022", "km": "140.000 km", "trans": "", "fuel": "Diesel", "traccion": "", "unico_dueno": true, "image": "img/ig_3923873912216393817.jpg", "caption": "FORD TRANSIT CUSTOM 🚜\n• Año: 2022\n• Kilometraje: 140.000\n• Único dueño\nDocumentación al día\n💳 Aceptamos tarjetas de crédito\nPara más información comunícate con nosotros ⬇️\n📍 Capitan Godoy 365, San Bernardo, Santiago", "price": ""}, {"name": "NISSAN NAVARA SE 4X2", "brand": "Nissan", "model": "NAVARA SE 4X2", "type": "Camioneta", "type_en": "pickup", "year": "2021", "km": "154.000 km", "trans": "", "fuel": "Diesel", "traccion": "4x2", "unico_dueno": true, "image": "img/ig_3923982352858921314.jpg", "caption": "NISSAN NAVARA SE 4X2 🚜\n• Año: 2021\n• Kilometraje: 154.000\n• Único dueño\nDocumentación al día\n💳 Aceptamos tarjetas de crédito\nPara más información comunícate con nosotros ⬇️\n📍 Capitan Godoy 365, San Bernardo, Santiago", "price": ""}, {"name": "NISSAN NAVARA XE 4X2", "brand": "Nissan", "model": "NAVARA XE 4X2", "type": "Camioneta", "type_en": "pickup", "year": "2023", "km": "176.000 km", "trans": "", "fuel": "Diesel", "traccion": "4x2", "unico_dueno": true, "image": "img/ig_3923855116156025131.jpg", "caption": "NISSAN NAVARA XE 4X2 🚜\n• Año: 2023\n• Kilometraje: 176.000\n• Único dueño\nDocumentación al día\n💳 Aceptamos tarjetas de crédito\nPara más información comunícate con nosotros ⬇️\n📍 Capitan Godoy 365, San Bernardo, Santiago", "price": ""}, {"name": "NISSAN NAVARA XE 4X2", "brand": "Nissan", "model": "NAVARA XE 4X2", "type": "Camioneta", "type_en": "pickup", "year": "2023", "km": "210.000 km", "trans": "", "fuel": "Diesel", "traccion": "4x2", "unico_dueno": true, "image": "img/ig_3923966693096892463.jpg", "caption": "NISSAN NAVARA XE 4X2 🚜\n• Año: 2023\n• Kilometraje: 210.000\n• Único dueño\nDocumentación al día\n💳 Aceptamos tarjetas de crédito\nPara más información comunícate con nosotros ⬇️\n📍 Capitan Godoy 365, San Bernardo, Santiago", "price": ""}, {"name": "FORD RANGER XLT 3.2 4X4 (EQUIPADA)", "brand": "Ford", "model": "RANGER XLT 3.2 4X4 (EQUIPADA)", "type": "Camioneta", "type_en": "pickup", "year": "2023", "km": "68.000 km", "trans": "", "fuel": "", "traccion": "4x4", "unico_dueno": false, "image": "img/ig_3868185994411749855.jpg", "caption": "FORD RANGER XLT 3.2 4X4 (EQUIPADA) \n\n• Año: 2023\n• Kilometraje: 68.000\nDocumentación al día\n\n💳 Aceptamos tarjetas de crédito\n\nPara más información comunícate con nosotros ⬇️\n\n📍 Capitan Godoy 365, San Bernardo, Santiago", "price": ""}, {"name": "VOLKSWAGEN JETTA R LINE", "brand": "Volkswagen", "model": "JETTA R LINE", "type": "Sedán", "type_en": "sedan", "year": "2019", "km": "192.000 km", "trans": "", "fuel": "Bencina", "traccion": "", "unico_dueno": true, "image": "img/ig_3943443142591626320.jpg", "caption": "VOLKSWAGEN JETTA R LINE 🚜\n• Año: 2019\n• Kilometraje: 192.000\n• Único dueño\nDocumentación al día\n💳 Aceptamos tarjetas de crédito\nPara más información comunícate con nosotros ⬇️\n📍 Capitan Godoy 365, San Bernardo, Santiago", "price": ""}, {"name": "VOLKSWAGEN AMAROK TRENDLINE 4X2", "brand": "Volkswagen", "model": "AMAROK TRENDLINE 4X2", "type": "Camioneta", "type_en": "pickup", "year": "2021", "km": "149.000 km", "trans": "", "fuel": "Diesel", "traccion": "4x2", "unico_dueno": true, "image": "img/ig_3923890683216416235.jpg", "caption": "VOLKSWAGEN AMAROK TRENDLINE 4X2 🚜\n• Año: 2021\n• Kilometraje: 149.000\n• Único dueño\nDocumentación al día\n💳 Aceptamos tarjetas de crédito\nPara más información comunícate con nosotros ⬇️\n📍 Capitan Godoy 365, San Bernardo, Santiago", "price": ""}];
+const grid=document.getElementById('grid');
+const countEl=document.getElementById('results-count');
+function populateFilters(){
+const tipos=[...new Set(VEHICLES.map(v=>v.type))].sort();
+const marcas=[...new Set(VEHICLES.map(v=>v.brand))].filter(Boolean).sort();
+const tracciones=[...new Set(VEHICLES.map(v=>v.traccion))].filter(Boolean).sort();
+const tipoSel=document.getElementById('f-tipo');
+tipos.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;tipoSel.appendChild(o);});
+const marcaSel=document.getElementById('f-marca');
+marcas.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=m;marcaSel.appendChild(o);});
+const tracSel=document.getElementById('f-traccion');
+tracciones.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;tracSel.appendChild(o);});
+}
+function getFiltered(){
+let result=[...VEHICLES];
+const tipo=document.getElementById('f-tipo').value;
+const marca=document.getElementById('f-marca').value;
+const traccion=document.getElementById('f-traccion').value;
+const yMin=document.getElementById('f-year-min').value;
+const yMax=document.getElementById('f-year-max').value;
+const kmMax=document.getElementById('f-km-max').value;
+if(tipo)result=result.filter(v=>v.type===tipo);
+if(marca)result=result.filter(v=>v.brand===marca);
+if(traccion)result=result.filter(v=>v.traccion===traccion);
+if(yMin)result=result.filter(v=>parseInt(v.year)>=parseInt(yMin));
+if(yMax)result=result.filter(v=>parseInt(v.year)<=parseInt(yMax));
+if(kmMax)result=result.filter(v=>parseInt(v.km.replace(/[^\d]/g,''))<=parseInt(kmMax));
+const sort=document.getElementById('sort').value;
+switch(sort){
+case'year-desc':result.sort((a,b)=>b.year-a.year);break;
+case'year-asc':result.sort((a,b)=>a.year-b.year);break;
+case'km-asc':result.sort((a,b)=>parseInt(a.km.replace(/[^\d]/g,''))-parseInt(b.km.replace(/[^\d]/g,'')));break;
+case'km-desc':result.sort((a,b)=>parseInt(b.km.replace(/[^\d]/g,''))-parseInt(a.km.replace(/[^\d]/g,'')));break;
+case'brand':result.sort((a,b)=>a.brand.localeCompare(b.brand));break;
+}
+return result;
+}
+function renderGrid(){
+const filtered=getFiltered();
+countEl.textContent=filtered.length+' vehículo(s) encontrado(s)';
+if(filtered.length===0){grid.innerHTML='<div class="no-results">No se encontraron vehículos con esos filtros.</div>';return;}
+grid.innerHTML='';
+filtered.forEach(v=>{
+const specs=[];
+if(v.year)specs.push('<span>'+v.year+'</span>');
+if(v.km)specs.push('<span>'+v.km+'</span>');
+if(v.traccion)specs.push('<span>'+v.traccion+'</span>');
+if(v.trans)specs.push('<span>'+v.trans+'</span>');
+const card=document.createElement('div');
+card.className='vehicle-card';
+card.innerHTML=`<img src="${v.image}" alt="${v.name}" loading="lazy"><div class="info"><h3>${v.name}</h3><div class="spec">${specs.join('')}</div><div class="extra">${v.unico_dueno?'✓ Único dueño · ':''}Doc. al día${v.brand?' · '+v.brand:''}</div></div>`;
+grid.appendChild(card);
+});
+}
+function clearFilters(){
+['f-tipo','f-marca','f-traccion','f-year-min','f-year-max','f-km-max'].forEach(id=>{document.getElementById(id).value='';});
+document.getElementById('sort').value='recent';
+renderGrid();
+}
+['f-tipo','f-marca','f-traccion','f-year-min','f-year-max','f-km-max'].forEach(id=>{
+document.getElementById(id).addEventListener('change',renderGrid);
+document.getElementById(id).addEventListener('input',renderGrid);
+});
+populateFilters();
+renderGrid();
+</script>
+</body>
+</html>
